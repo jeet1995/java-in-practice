@@ -12,8 +12,8 @@ public class EnumMapInsteadOfOrdinal {
     public static void main(String[] args) {
         List<Plant> plants = new ArrayList<>();
 
-        // constructor uses a bounded type token
-        // a bad alternative to EnumMap is use Set<Plant>[] as a data structure
+        // 1. constructor uses a bounded type token
+        // 2. a bad alternative to EnumMap is use Set<Plant>[] as a data structure
         // where we rely on the ordinality of the Lifecyle enum type - can lead to
         // ArrayIndexOutOfBounds or incorrect ordinality
         EnumMap<Plant.Lifecycle, Set<Plant>> plantByLifecycleMap = new EnumMap<>(Plant.Lifecycle.class);
