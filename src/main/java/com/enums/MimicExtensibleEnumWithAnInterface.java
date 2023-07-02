@@ -23,6 +23,7 @@ public class MimicExtensibleEnumWithAnInterface {
         }
     }
 
+    // 2. this method looks simpler but loses the capability of making use of an EnumMap or an EnumSet
     private static void testAllOpsWithBoundedWildcardType(Collection<? extends Operation> ops, double x, double y) {
         for (Operation op : ops) {
             System.out.printf("%f %s %f = %f%n", x, op, y, op.apply(x, y));
