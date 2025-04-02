@@ -1,115 +1,69 @@
-# Creation and Destroying Objects
+# Creation and Destroying Objects Examples
 
-This package demonstrates various patterns and best practices for object creation and destruction in Java.
+This package contains examples demonstrating various patterns and best practices for creating and destroying objects in Java. Each example illustrates different aspects of object lifecycle management, from creation to cleanup.
 
-## Classes Overview
+## Examples Overview
 
-### 1. TrueSingleton
-Demonstrates a thread-safe singleton implementation using a class-based approach.
+### Singleton Pattern
+1. `TrueSingleton.java` - Demonstrates the traditional singleton pattern with lazy initialization and thread safety.
+2. `EnumSingleton.java` - Shows how to implement a singleton using Java's enum type, which provides serialization safety and thread safety by default.
 
-Key concepts:
-- Private constructor to prevent instantiation
-- Static instance field for the singleton
-- Synchronized `getInstance()` method for thread safety
-- Serialization handling with `readResolve()`
-- Protection against reflection attacks
+### Builder Pattern
+1. `hierarchical_builder/Pizza.java` - Illustrates the hierarchical builder pattern using recursive generics, allowing for type-safe inheritance in builders.
 
-Usage:
-```java
-TrueSingleton instance = TrueSingleton.getInstance();
-```
+### Resource Management
+1. `ResourceFactory.java` - Shows how to use the Supplier functional interface for flexible resource creation and management.
+2. `CleanerWithAutocloseableExample.java` - Demonstrates modern resource cleanup using both Cleaner and AutoCloseable:
+   - Combines try-with-resources for explicit cleanup
+   - Uses Cleaner as a safety net for garbage collection
+   - Shows how to properly structure cleanup code
+   - Illustrates best practices for resource management
 
-### 2. EnumSingleton
-Demonstrates the preferred way to implement a singleton in Java using an enum.
+### Memory Management
+1. `WeakHashMapExample.java` - Demonstrates the use of WeakHashMap and string interning:
+   - Shows how WeakHashMap allows entries to be garbage collected
+   - Illustrates the difference between interned and regular strings
+   - Explains memory leak prevention through weak references
 
-Key concepts:
-- Enum-based singleton pattern
-- Automatic thread safety
-- Built-in serialization handling
-- Protection against reflection attacks
-- Guaranteed single instance by JVM
+### Memory Leak Prevention
+1. `LeakyStack.java` - Shows how to prevent memory leaks in a stack implementation:
+   - Demonstrates the importance of nullifying references
+   - Illustrates common memory leak scenarios
+   - Shows proper cleanup of array-based data structures
 
-Usage:
-```java
-EnumSingleton instance = EnumSingleton.INSTANCE;
-```
-
-### 3. Hierarchical Builder Pattern
-Located in the `hierarchical_builder` package, demonstrates how to implement the Builder pattern with class hierarchies.
-
-Key concepts:
-- Recursive generics for type-safe builders
-- Abstract base class with common building steps
-- Concrete subclasses with specific building steps
-- Immutable objects
-- Fluent interface design
-
-Classes:
-- `Pizza`: Abstract base class with common pizza attributes
-- `NyPizza`: Concrete implementation for New York style pizza
-- `Calzone`: Concrete implementation for Calzone pizza
-
-Usage:
-```java
-// Creating a New York Pizza
-NyPizza nyPizza = new NyPizza.Builder(NyPizza.Size.SMALL)
-    .addTopping(Pizza.Topping.SAUSAGE)
-    .addTopping(Pizza.Topping.ONION)
-    .build();
-
-// Creating a Calzone
-Calzone calzone = new Calzone.Builder()
-    .addTopping(Pizza.Topping.HAM)
-    .addTopping(Pizza.Topping.MUSHROOM)
-    .sauceInside()
-    .build();
-```
+### Finalizer Safety
+1. `FinalizerAttack.java` - Demonstrates security vulnerabilities with finalizers
+2. `FinalizerGuardian.java` - Shows how to protect against finalizer attacks:
+   - Implements the finalizer guardian pattern
+   - Ensures proper cleanup even with malicious subclasses
+   - Illustrates safe resource management patterns
 
 ## Best Practices Demonstrated
 
-1. **Immutability**
-   - Use of final fields
-   - Defensive copying where necessary
-   - Private constructors
+1. **Object Creation**
+   - Use builders for objects with many parameters
+   - Consider static factory methods over constructors
+   - Use dependency injection for flexibility
+   - Implement proper singleton patterns
 
-2. **Thread Safety**
-   - Synchronized methods
-   - Thread-safe initialization
-   - Enum-based guarantees
+2. **Resource Management**
+   - Prefer try-with-resources over try-finally
+   - Implement AutoCloseable for cleanup
+   - Use Cleaner as a safety net
+   - Avoid finalizers when possible
 
-3. **Type Safety**
-   - Generic type parameters
-   - Recursive type bounds
-   - Covariant return types
+3. **Memory Management**
+   - Clean up references in collections
+   - Use weak references when appropriate
+   - Be aware of memory leak scenarios
+   - Implement proper cleanup methods
 
-4. **Encapsulation**
-   - Private constructors
-   - Private fields
-   - Public accessor methods
+4. **Security**
+   - Protect against finalizer attacks
+   - Implement proper access controls
+   - Consider serialization safety
+   - Use immutable objects when possible
 
-5. **Design Patterns**
-   - Singleton Pattern
-   - Builder Pattern
-   - Hierarchical Builder Pattern
+## Usage
 
-## When to Use Each Pattern
-
-### Singleton Pattern
-Use when:
-- You need exactly one instance of a class
-- The instance needs to be shared across the application
-- You need to control access to a shared resource
-
-### Builder Pattern
-Use when:
-- You have many constructor parameters
-- Some parameters are optional
-- You need to enforce invariants during construction
-- You want to create immutable objects
-
-### Hierarchical Builder Pattern
-Use when:
-- You have a class hierarchy
-- Each subclass needs its own builder
-- You want to share common building steps
-- You need type-safe builders 
+Each example class contains a `main` method that demonstrates its functionality. Run the examples individually to see different patterns and practices in action. 
